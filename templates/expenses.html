@@ -1,0 +1,150 @@
+{%extends 'base.html'%}
+{%block body %}
+<div class="container">
+    <h3 class="mt-5">Expenses</h3>
+    {%for expense in expenses%}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-2 bg-white shadow rounded">
+                <div class="card-body"> 
+                    <div class="row">
+                        <div class="col-md-2">{{expense.date}}</div>
+                        <div class="col-md-2">{{expense.expensename}}</div>
+                        <div class="col-md-2">{{expense.amount}}</div>
+                        <div class="col-md-2">
+                            <span class="badge bg-secondary">{{expense.category}}</span>
+                        </div> 
+                        <div class="col-md-2">
+                            <button class="btn btn-sm btn-success"onclick="window.location.href='/expenses/{{expense.id}}'">Edit</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-sm btn-danger" onclick="window.location.href='/delete/{{expense.id}}'">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%endfor%}
+</div>
+<div class="container">
+    <h3 class="mt-5">Expenses Total</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-2 bg-white shadow rounded">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">Total</div>
+                        <div class="col-md-6">{{total}}</div>
+                    </div> 
+                </div>
+            </div>
+            <div class="card mb-2 bg-white shadow rounded">
+                <div class="card-body"> 
+                    <div class="row">
+                        <div class="col-md-6">Food</div>
+                        <div id='tfood' class="col-md-6">{{t_food}}</div>
+                    </div> 
+                </div>
+            </div>
+            <div class="card mb-2 bg-white shadow rounded">
+                <div class="card-body"> 
+                    <div class="row">
+                        <div class="col-md-6">Entertainment</div>
+                        <div id='tentertainment' class="col-md-6">{{t_entertainment}}</div>
+                    </div> 
+                </div>
+            </div>
+            <div class="card mb-2 bg-white shadow rounded">
+                <div class="card-body"> 
+                    <div class="row">
+                        <div class="col-md-6">Utilities</div>
+                        <div id="tutilities" class="col-md-6">{{t_utilities}}</div>
+                    </div> 
+                </div>
+            </div>
+            <div class="card mb-2 bg-white shadow rounded">
+                <div class="card-body"> 
+                    <div class="row">
+                        <div class="col-md-6">Travel</div>
+                        <div id="ttravel" class="col-md-6">{{t_travel}}</div>
+                    </div> 
+                </div>
+            </div>
+            <div class="card mb-2 bg-white shadow rounded">
+                <div class="card-body"> 
+                    <div class="row">
+                        <div class="col-md-6">Others</div>
+                        <div id="tothers" class="col-md-6">{{t_others}}</div>
+                    </div> 
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6 mb-4 ml-4 ">
+            <div style="height: 400px" width="400px">
+                <canvas id="myChart"></canvas>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                const ctx = document.getElementById('myChart').getContext('2d');
+
+                let tfood = document.getElementById('tfood').innerText
+                let tentertainment = document.getElementById('tentertainment').innerHTML
+                let tutilities = document.getElementById('tutilities').innerHTML
+                let ttravel = document.getElementById('ttravel').innerHTML
+                let tothers = document.getElementById('tothers').innerHTML
+
+                new Chart(ctx, {
+                  type: 'pie',
+                  data: {
+                    labels: ['Food', 'Entertainment', 'Utilities', 'Travel', 'Others'],
+                    datasets: [{
+                      label: 'Expense Categories',
+                      data: [tfood, tentertainment,tutilities, ttravel, tothers],
+                      backgroundColor:[
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)'
+                      ],
+                      borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                      borderWidth:1
+                    }]
+                  },
+                  
+                });
+              </script>
+            <!-- <div>
+                <canvas id="myChart"></canvas>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                const ctx = document.getElementById('myChart');
+              
+                new Chart(ctx, {
+                  type: 'doughnut',
+                  data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                      label: 'Expense Categories',
+                      data: [{t_food},{t_travel},{t_entertainment},{t_utilities},{t_others}],
+                      borderWidth: 1
+                    }]
+                  },
+                });
+              </script> -->
+
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}
