@@ -2,3 +2,4 @@ Flask
 SQLAlchemy
 Werkzeug
 Flask-SQLAlchemy
+gunicorn==19.7.1
